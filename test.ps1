@@ -1,3 +1,2 @@
 $a = Get-Service
-
-Write-Host $a
+Write-Host "$a"
