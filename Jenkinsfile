@@ -5,7 +5,7 @@ pipeline {
         stage('Clone Code') {
             steps {
                 echo 'Cloning the repository...'
-                git 'https://github.com/SharathKumar2036/Jenkins_Plays.git'
+                // git 'https://github.com/SharathKumar2036/Jenkins_Plays.git'
             }
         }
 
