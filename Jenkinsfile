@@ -30,7 +30,7 @@ pipeline {
             }
         }
 
-        stage('Run test2 Sh Scripts') {
+        stage('Run test3 Sh Scripts') {
             steps {
                 echo 'Running test.sh...'
                 sh './test3.sh'
