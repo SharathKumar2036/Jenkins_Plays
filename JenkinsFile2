@@ -10,7 +10,6 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                //git 'https://github.com/your-username/webpage-docker.git'
                 echo "git cloned"
             }
         }
