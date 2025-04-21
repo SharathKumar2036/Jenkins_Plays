@@ -2,49 +2,42 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'webpage-docker'
-        CONTAINER_NAME = 'webpage-container'
-        PORT = '8080'
+        IMAGE_NAME = 'my-static-site'
+        CONTAINER_NAME = 'static-web'
     }
 
     stages {
         stage('Clone Repo') {
             steps {
-                echo "git cloned"
+                git 'https://github.com/your-username/your-repo.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    sh "docker build -t ${IMAGE_NAME} ."
-                }
+                sh 'docker build -t $IMAGE_NAME .'
             }
         }
 
-        stage('Stop Existing Container (if any)') {
+        stage('Stop Existing Container') {
             steps {
-                script {
-                    sh "docker rm -f ${CONTAINER_NAME} || true"
-                }
+                sh '''
+                docker stop $CONTAINER_NAME || true
+                docker rm $CONTAINER_NAME || true
+                '''
             }
         }
 
-        stage('Run New Container') {
+        stage('Run Docker Container') {
             steps {
-                script {
-                    sh "docker run -d --name ${CONTAINER_NAME} -p ${PORT}:80 ${IMAGE_NAME}"
-                }
+                sh 'docker run -d --name $CONTAINER_NAME -p 8080:80 $IMAGE_NAME'
             }
         }
     }
 
     post {
         success {
-            echo "✅ Webpage deployed successfully at http://<your-server-ip>:${PORT}"
-        }
-        failure {
-            echo "❌ Deployment failed!"
+            echo 'App deployed successfully. Access it via http://<server-ip>:8080'
         }
     }
 }
